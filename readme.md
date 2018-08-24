@@ -16,12 +16,12 @@ This requires the [Booster extension](https://github.com/typesupply/booster) to 
 
 This will be the settings defining where to copy the data from.
 
-**Font:** Pick the font you want to copy from.
-**Glyph:** Enter the name of the glyph you want to copy from.
-**Layers:** Select the layer, or layers, that you want to copy from.
-**Paste Contours:** Check if you want to copy contours.
-**Paste Components:** Check if you want to copy components.
-**Paste Width:** Check if you want to copy the widths.
+- **Font:** Pick the font you want to copy from.
+- **Glyph:** Enter the name of the glyph you want to copy from.
+- **Layers:** Select the layer, or layers, that you want to copy from.
+- **Paste Contours:** Check if you want to copy contours.
+- **Paste Components:** Check if you want to copy components.
+- **Paste Width:** Check if you want to copy the widths.
 
 ### Destination
 
@@ -31,9 +31,9 @@ This will be the settings defining where to paste the data to.
 
 ### Buttons
 
-**OK:** Paste with the current settings and close the window.
-**Apply:** Paste with the current settings and leave the window open so you can paste something else.
-**Cancel:** Close the window without pasting with the current settings. If you've used the *Apply* button, this will not undo those pastes. If you need to undo, use the standard *Undo* menu/key command.
+- **OK:** Paste with the current settings and close the window.
+- **Apply:** Paste with the current settings and leave the window open so you can paste something else.
+- **Cancel:** Close the window without pasting with the current settings. If you've used the *Apply* button, this will not undo those pastes. If you need to undo, use the standard *Undo* menu/key command.
 
 *Note:* In *OK* and *Apply*, if you try to paste using the same settings twice in a row, the second time will be ignored. This prevents double pasting.
 
