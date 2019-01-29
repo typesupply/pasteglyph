@@ -1,7 +1,5 @@
 # Paste Glyph
 
-*Note: this has only been lightly tested so far. Please report any bugs. Thanks!*
-
 You know when you are working on your *e* and you want to compare the curves you are drawing to your *o* so you switch to the *o*, select all, copy, switch to the *e* and paste? Or when you are starting the *I* and you want the stem from the *H*? Or when you are drawing *=* and …? You get the idea. Those steps are annoying. This extension streamlines the *switch, select, copy, switch, paste* process. It allows you to paste a contours, components and the width from any layer of any glyph or any open font into the glyph you are currently working on. It also does more than one layer at a time if you want it to.
 
 ## Dependencies
