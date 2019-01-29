@@ -1,13 +1,16 @@
-from AppKit import NSFont, NSBeep
+from AppKit import NSFont, NSBeep, NSObject
 import vanilla
 from mojo.UI import CurrentGlyphWindow, StatusInteractivePopUpWindow
 from booster.controller import BoosterController
 
+debug = False
+controllerIdentifier = "com.typesupply.PasteGlyph"
 lastPasteLibKey = "com.typesupply.PasteGlyph.lastPastedGlyphName"
+
 
 class PasteGlyphController(BoosterController):
 
-    identifier = "com.typesupply.PasteGlyph"
+    identifier = controllerIdentifier
 
     def start(self, glyph):
         super(PasteGlyphController, self).start()
@@ -47,6 +50,10 @@ class PasteGlyphController(BoosterController):
             (inputL, top, inputW, 21),
             []
         )
+        self._glyphNameComboBoxDataSource = PasteGlyphComboBoxDataSource.alloc().init()
+        self.w.sourceGlyphComboBox.getNSComboBox().setUsesDataSource_(True)
+        self.w.sourceGlyphComboBox.getNSComboBox().setDataSource_(self._glyphNameComboBoxDataSource)
+
         top += 30
         self.w.sourceLayersTitle = vanilla.TextBox((titleL, top+2, titleW, 17), "Layers:", alignment="right")
         self.w.sourceLayersList = vanilla.List(
@@ -152,7 +159,7 @@ class PasteGlyphController(BoosterController):
                 selection = self.currentGlyph.name
         else:
             selection = self.currentGlyph.lib.get(lastPasteLibKey, selection)
-        self.w.sourceGlyphComboBox.setItems(names)
+        self._glyphNameComboBoxDataSource.setGlyphNames_(names)
         self.w.sourceGlyphComboBox.set(selection)
 
     def populateSourceLayers(self):
@@ -261,6 +268,43 @@ class PasteGlyphController(BoosterController):
             if doWidth:
                 destinationGlyph.width = sourceGlyph.width
             destinationGlyph.performUndo()
+
+
+# ------------------
+# Combo Box Delegate
+# ------------------
+
+if debug:
+    from booster.debug import ClassNameIncrementer
+else:
+    ClassNameIncrementer = None
+
+class PasteGlyphComboBoxDataSource(NSObject, metaclass=ClassNameIncrementer):
+
+    def init(self):
+        self = super(PasteGlyphComboBoxDataSource, self).init()
+        self._glyphNames = []
+        return self
+
+    def setGlyphNames_(self, names):
+        self._glyphNames = names
+
+    def comboBox_completedString_(self, comboBox, text):
+        if text in self._glyphNames:
+            return text
+        for name in self._glyphNames:
+            if name.startswith(text):
+                return name
+        return text
+
+    def comboBox_indexOfItemWithStringValue_(self, comboBox, text):
+        return self._glyphNames.index(text)
+
+    def comboBox_objectValueForItemAtIndex_(self, comboBox, index):
+        return self._glyphNames[index]
+
+    def numberOfItemsInComboBox_(self, comboBox):
+        return len(self._glyphNames)
 
 
 # -------
