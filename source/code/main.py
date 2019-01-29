@@ -3,6 +3,8 @@ import vanilla
 from mojo.UI import CurrentGlyphWindow, StatusInteractivePopUpWindow
 from booster.controller import BoosterController
 
+lastPasteLibKey = "com.typesupply.PasteGlyph.lastPastedGlyphName"
+
 class PasteGlyphController(BoosterController):
 
     identifier = "com.typesupply.PasteGlyph"
@@ -148,6 +150,8 @@ class PasteGlyphController(BoosterController):
         if self.font != self.currentGlyph.font:
             if self.currentGlyph.name in self.font.keys():
                 selection = self.currentGlyph.name
+        else:
+            selection = self.currentGlyph.lib.get(lastPasteLibKey, selection)
         self.w.sourceGlyphComboBox.setItems(names)
         self.w.sourceGlyphComboBox.set(selection)
 
@@ -239,6 +243,8 @@ class PasteGlyphController(BoosterController):
         # copy data
         for sourceGlyph, destinationGlyph in pairs:
             destinationGlyph.prepareUndo("Paste Glyph")
+            if sourceGlyph.font == destinationGlyph.font:
+                destinationGlyph.lib[lastPasteLibKey] = sourceGlyph.name
             selectContours = []
             if doContours:
                 for contour in sourceGlyph:
