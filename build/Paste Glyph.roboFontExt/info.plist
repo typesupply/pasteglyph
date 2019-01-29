@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>path</key>
-			<string>main.py</string>
+			<string>menu_pasteGlyph.py</string>
 			<key>preferredName</key>
 			<string>Paste Glyph</string>
 			<key>shortKey</key>
@@ -23,7 +23,7 @@
 	<key>html</key>
 	<false/>
 	<key>launchAtStartUp</key>
-	<false/>
+	<true/>
 	<key>mainScript</key>
 	<string>main.py</string>
 	<key>name</key>
@@ -33,8 +33,8 @@
 	<key>requiresVersionMinor</key>
 	<string>2</string>
 	<key>timeStamp</key>
-	<real>1534601017.817235</real>
+	<real>1548799573.316052</real>
 	<key>version</key>
-	<string>0.1</string>
+	<string>0.2</string>
 </dict>
 </plist>

@@ -3,14 +3,14 @@ import os
 from mojo.extensions import ExtensionBundle
 
 name = "Paste Glyph"
-version = "0.1"
+version = "0.2"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
 roboFontVersion = "3.2"
 pycOnly = False
 menuItems = [
     dict(
-        path="main.py",
+        path="menu_pasteGlyph.py",
         preferredName="Paste Glyph",
         shortKey=(NSCommandKeyMask | NSShiftKeyMask, "v")
     )
@@ -31,7 +31,7 @@ B.name = name
 B.developer = developer
 B.developerURL = developerURL
 B.version = version
-B.launchAtStartUp = False
+B.launchAtStartUp = True
 B.mainScript = "main.py"
 B.html = os.path.exists(os.path.join(sourcePath, "documentation", "index.html"))
 B.requiresVersionMajor = roboFontVersion.split(".")[0]
