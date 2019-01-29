@@ -43,9 +43,7 @@ class PasteGlyphController(BoosterController):
         self.w.sourceGlyphTitle = vanilla.TextBox((titleL, top+2, titleW, 17), "Glyph:", alignment="right")
         self.w.sourceGlyphComboBox = vanilla.ComboBox(
             (inputL, top, inputW, 21),
-            [],
-            callback=self.sourceGlyphComboBoxCallback,
-            continuous=True
+            []
         )
         top += 30
         self.w.sourceLayersTitle = vanilla.TextBox((titleL, top+2, titleW, 17), "Layers:", alignment="right")
@@ -94,7 +92,6 @@ class PasteGlyphController(BoosterController):
         makeTextBold(self.w.destinationTitle)
 
         self.populateSourceFonts()
-        self.sourceGlyphComboBoxCallback(self.w.sourceGlyphComboBox)
         self.populateDestinationLayer()
 
         self.w.setDefaultButton(self.w.okButton)
@@ -125,15 +122,6 @@ class PasteGlyphController(BoosterController):
         self.populateSourceGlyphs()
         self.populateSourceLayers()
 
-    def sourceGlyphComboBoxCallback(self, sender):
-        value = sender.get()
-        allKeys = []
-        for layer in self.font.layers:
-            allKeys += layer.keys()
-        canPaste = value in allKeys
-        self.w.applyButton.enable(canPaste)
-        self.w.okButton.enable(canPaste)
-
     def sourceLayersListSelectionCallback(self, sender):
         haveOneLayer = len(sender.getSelection()) == 1
         self.w.destinationLayerPopUp.enable(haveOneLayer)
@@ -156,11 +144,11 @@ class PasteGlyphController(BoosterController):
                 if name not in names:
                     unordered.add(name)
         names += sorted(unordered)
-        self.w.sourceGlyphComboBox.setItems(names)
         selection = ""
         if self.font != self.currentGlyph.font:
             if self.currentGlyph.name in self.font.keys():
                 selection = self.currentGlyph.name
+        self.w.sourceGlyphComboBox.setItems(names)
         self.w.sourceGlyphComboBox.set(selection)
 
     def populateSourceLayers(self):
@@ -212,10 +200,12 @@ class PasteGlyphController(BoosterController):
         doWidth = settings["doWidth"]
         # gather source data
         sourceFont = self.font
-        sourceGlyphName = self.w.sourceGlyphComboBox.get()
+        sourceGlyphName = self.w.sourceGlyphComboBox.get().strip()
         sourceLayers = {}
         for sourceLayer in sourceFont.layers:
             if sourceLayer.name not in copyLayerNames:
+                continue
+            if not sourceGlyphName:
                 continue
             if sourceGlyphName not in sourceLayer:
                 continue
