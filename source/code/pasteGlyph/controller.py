@@ -4,7 +4,6 @@ from fontParts.world import CurrentGlyph
 from mojo.UI import CurrentGlyphWindow, StatusInteractivePopUpWindow
 from booster.controller import BoosterController
 
-debug = False
 controllerIdentifier = "com.typesupply.PasteGlyph"
 lastPasteLibKey = "com.typesupply.PasteGlyph.lastPastedGlyphName"
 
@@ -288,10 +287,10 @@ class PasteGlyphWindowController(BoosterController):
 # Combo Box Delegate
 # ------------------
 
-class _PasteGlyphComboBoxDataSource(NSObject):
+class PasteGlyphComboBoxDataSource(NSObject):
 
     def init(self):
-        self = super(_PasteGlyphComboBoxDataSource, self).init()
+        self = super(PasteGlyphComboBoxDataSource, self).init()
         self._glyphNames = []
         return self
 
@@ -307,6 +306,8 @@ class _PasteGlyphComboBoxDataSource(NSObject):
         return text
 
     def comboBox_indexOfItemWithStringValue_(self, comboBox, text):
+        if text not in self._glyphNames:
+            return -1
         return self._glyphNames.index(text)
 
     def comboBox_objectValueForItemAtIndex_(self, comboBox, index):
@@ -314,12 +315,6 @@ class _PasteGlyphComboBoxDataSource(NSObject):
 
     def numberOfItemsInComboBox_(self, comboBox):
         return len(self._glyphNames)
-
-if debug:
-    from booster.debug import ClassNameIncrementer
-    class PasteGlyphComboBoxDataSource(_PasteGlyphComboBoxDataSource, metaclass=ClassNameIncrementer): pass
-else:
-    class PasteGlyphComboBoxDataSource(_PasteGlyphComboBoxDataSource): pass
 
 
 # -------
@@ -342,4 +337,5 @@ def getGlyphEditorRectAndScreen(editorWindow):
     y = -(y + h)
     return (x, y, w, h), screen
 
-
+if __name__ == "__main__":
+    _PasteGlyphController().show()
