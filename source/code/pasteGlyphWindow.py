@@ -1,35 +1,19 @@
-from AppKit import NSFont, NSBeep, NSObject
+from AppKit import NSFont, NSObject
 import vanilla
-from fontParts.world import CurrentGlyph
+from fontParts.world import CurrentGlyph, AllFonts
 from mojo.UI import CurrentGlyphWindow, StatusInteractivePopUpWindow
-from booster.controller import BoosterController
 
-controllerIdentifier = "com.typesupply.PasteGlyph"
 lastPasteLibKey = "com.typesupply.PasteGlyph.lastPastedGlyphName"
-
-
-class _PasteGlyphController(BoosterController):
-
-    identifier = controllerIdentifier
-
-    def show(self):
-        glyph = CurrentGlyph()
-        if glyph is not None:
-            PasteGlyphWindowController(glyph, self)
-        else:
-            NSBeep()
 
 
 # ---------
 # Interface
 # ---------
 
-class PasteGlyphWindowController(BoosterController):
+class PasteGlyphWindowController:
 
-    def __init__(self, glyph, controller):
-        self.currentGlyph = glyph
-        self.controller = controller
-
+    def __init__(self):
+        self.currentGlyph = CurrentGlyph()
         self.history = []
 
         top = 15
@@ -153,8 +137,8 @@ class PasteGlyphWindowController(BoosterController):
     # -----------------
 
     def populateSourceFonts(self):
-        self.fonts = self.controller.getAllFonts()
-        names = [font.uniqueName for font in self.fonts]
+        self.fonts = AllFonts()
+        names = makeFontNames(self.fonts)
         self.w.sourceFontPopUp.setItems(names)
         self.fontPopUpCallback(self.w.sourceFontPopUp)
 
@@ -337,5 +321,33 @@ def getGlyphEditorRectAndScreen(editorWindow):
     y = -(y + h)
     return (x, y, w, h), screen
 
-if __name__ == "__main__":
-    _PasteGlyphController().show()
+def makeFontNames(fonts):
+    names = []
+    for font in fonts:
+        family = font.info.familyName
+        style = font.info.styleName
+        if family is None:
+            family = "Untitled Family"
+        if style is None:
+            style = "Untitled Style"
+        name = "-".join((family, style))
+        if name == "Untitled Family-Untitled Style":
+            name = "Untitled Font"
+        increment = 0
+        while 1:
+            if increment > 500:
+                raise NotImplementedError("Do you really have 500 fonts with the same name open!?")
+            if increment == 0:
+                if name not in names:
+                    break
+                else:
+                    increment = 1
+            else:
+                n = name + " " + repr(increment)
+                if n not in names:
+                    name = n
+                    break
+                else:
+                    increment += 1
+        names.append(name)
+    return names

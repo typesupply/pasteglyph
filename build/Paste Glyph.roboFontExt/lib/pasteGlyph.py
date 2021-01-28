@@ -1,0 +1,3 @@
+from pasteGlyphWindow import PasteGlyphWindowController
+
+OpenWindow(PasteGlyphWindowController)
