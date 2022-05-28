@@ -63,10 +63,10 @@ class PasteGlyphWindowController(ezui.WindowController):
         !§ Source
 
         : Font:
-        (FontName.ufo ...)       @sourceFontNamePopUpButton
+        ( ...)                   @sourceFontNamePopUpButton
 
         : Glyph:
-        [_glyphName ...]         @sourceGlyphNameComboBox
+        [_ ...]                  @sourceGlyphNameComboBox
 
         : Layers:
         | Layer Name |           @sourceLayerNameTable
@@ -74,7 +74,7 @@ class PasteGlyphWindowController(ezui.WindowController):
         !§ Destination
 
         : Layer:
-        (Layer Name ...)         @destinationLayerNamePopUpButton
+        ( ...)                  @destinationLayerNamePopUpButton
 
         !§ Options
 
@@ -84,10 +84,10 @@ class PasteGlyphWindowController(ezui.WindowController):
         [ ] Width                @optionsPasteWidthCheckbox
 
         : X Alignment:
-        (Left ...)               @optionsXAlignmentPopUpButton
+        ( ...)                   @optionsXAlignmentPopUpButton
 
         : Y Alignment:
-        (Bottom ...)             @optionsYAlignmentPopUpButton
+        ( ...)                   @optionsYAlignmentPopUpButton
 
         !§                       # XXX this is a hack just to put a line above the footer
 
