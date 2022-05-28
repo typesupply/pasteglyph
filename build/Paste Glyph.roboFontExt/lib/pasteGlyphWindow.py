@@ -89,16 +89,19 @@ class PasteGlyphWindowController(ezui.WindowController):
         : Y Alignment:
         (Bottom ...)             @optionsYAlignmentPopUpButton
 
+        !§                       # XXX this is a hack just to put a line above the footer
+
         ====================
 
         (Cancel)                 @cancelButton
         (Apply)                  @applyButton
         (OK)                     @okButton
         """
+        footerButtonWidth = 65
         descriptionData = dict(
             content=dict(
                 titleColumnWidth=100,
-                itemColumnWidth=250,
+                itemColumnWidth=275,
             ),
             sourceFontNamePopUpButton=dict(
                 items=self.getSourceFontNames()
@@ -117,7 +120,14 @@ class PasteGlyphWindowController(ezui.WindowController):
             ),
             cancelButton=dict(
                 keyEquivalent=".",
-                keyEquivalentModifiers="command"
+                keyEquivalentModifiers="command",
+                width=footerButtonWidth
+            ),
+            applyButton=dict(
+                width=footerButtonWidth
+            ),
+            okButton=dict(
+                width=footerButtonWidth
             )
         )
 
