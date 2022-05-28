@@ -27,12 +27,12 @@
 	<key>name</key>
 	<string>Paste Glyph</string>
 	<key>requiresVersionMajor</key>
-	<string>3</string>
+	<string>4</string>
 	<key>requiresVersionMinor</key>
 	<string>2</string>
 	<key>timeStamp</key>
-	<real>1611863062.197505</real>
+	<real>1653703764.5074611</real>
 	<key>version</key>
-	<string>0.3</string>
+	<string>0.4</string>
 </dict>
 </plist>

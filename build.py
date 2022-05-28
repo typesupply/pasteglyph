@@ -3,10 +3,10 @@ import os
 from mojo.extensions import ExtensionBundle
 
 name = "Paste Glyph"
-version = "0.3"
+version = "0.4"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
-roboFontVersion = "3.2"
+roboFontVersion = "4.2"
 pycOnly = False
 menuItems = [
     dict(
