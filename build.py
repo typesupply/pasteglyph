@@ -3,7 +3,7 @@ import os
 from mojo.extensions import ExtensionBundle
 
 name = "Paste Glyph"
-version = "0.4"
+version = "0.5"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
 roboFontVersion = "4.2"
