@@ -89,9 +89,7 @@ class PasteGlyphWindowController(ezui.WindowController):
         : Y Alignment:
         ( ...)                   @optionsYAlignmentPopUpButton
 
-        !§                       # XXX this is a hack just to put a line above the footer
-
-        ====================
+        =------------------=
 
         (Cancel)                 @cancelButton
         (Apply)                  @applyButton
@@ -204,7 +202,14 @@ class PasteGlyphWindowController(ezui.WindowController):
         return name
 
     def getSourceFontNames(self):
-        sourceFontNames = list(self.sourceFonts.keys()) + [
+        sourceFontNames = []
+        current = CurrentFont()
+        for name, font in self.sourceFonts.items():
+            if font == current:
+                sourceFontNames.insert(0, name)
+            else:
+                sourceFontNames.append(name)
+        sourceFontNames += [
             AppKit.NSMenuItem.separatorItem(),
             openFontItemName
         ]
