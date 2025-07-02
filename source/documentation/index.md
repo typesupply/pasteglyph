@@ -4,7 +4,7 @@ Paste some data from a glyph into the current glyph.
 
 ## Source
 
-- **Font:** Pick the font you want to copy from. If you want to paste from a font that isn't open, select "Open Font…" and choose the font you want.
+- **Font:** Pick the font you want to copy from. This shows all open fonts and fonts in the same directory as the current font. If you want to paste from a font that isn't open, select "Open Font…" and choose the font you want.
 - **Glyph:** Enter the name of the glyph you want to copy from.
 - **Layers:** Select the layer, or layers, that you want to copy from.
 

@@ -3,11 +3,10 @@ import os
 from mojo.extensions import ExtensionBundle
 
 name = "Paste Glyph"
-version = "0.5"
+version = "0.6"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
 roboFontVersion = "4.2"
-pycOnly = False
 menuItems = [
     dict(
         path="pasteGlyph.py",
@@ -57,7 +56,7 @@ for menuItem in menuItems:
 
 basePath = os.path.dirname(__file__)
 sourcePath = os.path.join(basePath, "source")
-libPath = os.path.join(sourcePath, "code")
+libFolder = os.path.join(sourcePath, "code")
 licensePath = os.path.join(basePath, "license.txt")
 requirementsPath = os.path.join(basePath, "requirements.txt")
 resourcesPath = os.path.join(sourcePath, "resources")
@@ -95,7 +94,7 @@ if os.path.exists(requirementsPath):
 	with open(requirementsPath) as requirements:
 	    B.requirements = requirements.read()
 print("Building extension...", end=" ")
-v = B.save(extensionPath, libPath=libPath, pycOnly=pycOnly, htmlPath=docPath, resourcesPath=resourcesPath)
+v = B.save(extensionPath, libFolder=libFolder, htmlFolder=docPath, resourcesPath=resourcesPath)
 print("done!")
 errors = B.validationErrors()
 if errors:

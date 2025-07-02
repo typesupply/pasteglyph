@@ -1,5 +1,7 @@
+import pathlib
 from copy import deepcopy
 import pprint
+from objc import super
 import AppKit
 import ezui
 from fontParts.world import (
@@ -53,6 +55,15 @@ class PasteGlyphWindowController(ezui.WindowController):
         self.sourceFonts = {}
         for font in AllFonts(sortOptions="magic"):
             self.addSourceFont(font)
+        current = CurrentFont()
+        if current.path:
+            external = []
+            directory = pathlib.Path(current.path).parent
+            patterns = ("*.ufo", "*.ufoz")
+            for pattern in patterns:
+                for path in directory.glob(pattern):
+                    if path != current.path:
+                        self.sourceFonts[path.name] = path
         self.sourceFont = None
         self.currentGlyph = CurrentGlyph()
         self.history = []
@@ -203,12 +214,20 @@ class PasteGlyphWindowController(ezui.WindowController):
 
     def getSourceFontNames(self):
         sourceFontNames = []
+        external = []
         current = CurrentFont()
         for name, font in self.sourceFonts.items():
-            if font == current:
-                sourceFontNames.insert(0, name)
+            if isinstance(font, pathlib.Path):
+                external.append(name)
             else:
-                sourceFontNames.append(name)
+                if font == current:
+                    sourceFontNames.insert(0, name)
+                else:
+                    sourceFontNames.append(name)
+        if external:
+            sourceFontNames += [
+                AppKit.NSMenuItem.separatorItem(),
+            ] + external
         sourceFontNames += [
             AppKit.NSMenuItem.separatorItem(),
             openFontItemName
@@ -302,6 +321,9 @@ class PasteGlyphWindowController(ezui.WindowController):
             index = names.index(name)
             sender.setItems(names)
             sender.set(index)
+        elif isinstance(self.sourceFonts[name], pathlib.Path):
+            path = self.sourceFonts[name]
+            self.sourceFonts[name] = OpenFont(path=path, showInterface=False)
         self.sourceFont = self.sourceFonts[name]
         self.populateSourceGlyphs()
         self.populateSourceLayers()
